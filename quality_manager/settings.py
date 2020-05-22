@@ -4,7 +4,6 @@ from m3_legacy import config
 
 PROJECT_ROOT = os.path.dirname(__file__)
 STATIC_ROOT = os.path.join(PROJECT_ROOT, '../../static')
-
 conf = config.ProjectConfig(
     filenames=[
         os.getenv('WEB_BB_CONF') or os.path.normpath(os.path.join(PROJECT_ROOT, 'configs.conf')),
@@ -46,16 +45,17 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'team_management',
+    'team_management.core.base_memebers',
+    'team_management.core.teams',
+    'team_management.jira_integration',
+    'team_management.calendar',
     'm3',
-    'm3_ext',
-    'm3_ext.ui',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -66,14 +66,13 @@ ROOT_URLCONF = 'quality_manager.urls'
 default_template_loaders = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-    'm3_ext.ui.js_template_loader.Loader',
 )
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [os.path.join(BASE_DIR,
-                              'quality_manager/../quality_manager/templates',
+                              'quality_manager/../quality_manager/../team_management/templates',
                               )],
         'APP_DIRS': False,
         'OPTIONS': {
@@ -145,5 +144,9 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
-
+STATICFILES_FINDERS = (
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+)
 STATIC_URL = '/static/'
+STATICFILES_DIRS = (os.path.join('static'), )

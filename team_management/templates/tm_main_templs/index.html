@@ -1,0 +1,140 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width; initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static "style.css" %}">
+    <link rel="stylesheet" type="text/css"
+          href="{% static "media-queries.css" %}">
+    <link rel="stylesheet" type="text/css"
+          href="{% static "extjs/resources/css/ext-all.css" %}"/>
+    <script type="text/javascript"
+            src="{% static "extjs/adapter/ext/ext-base.js" %}"></script>
+    <script type="text/javascript"
+            src="{% static "extjs/ext-all.js" %}"></script>
+
+    <script type="text/javascript">
+
+        function smart_eval(text) {
+            if (text == undefined) {
+                // на случай, когда в процессе получения ответа сервера произошел аборт
+                return;
+            }
+            if (text.substring(0, 1) == '{') {
+                // это у нас json объект
+                var obj = Ext.util.JSON.decode(text);
+                if (!obj) {
+                    return;
+                }
+                if (obj.code) {
+                    var eval_result = obj.code();
+                    if (eval_result && eval_result instanceof Ext.Window && typeof AppDesktop != 'undefined' && AppDesktop) {
+                        AppDesktop.getDesktop().createWindow(eval_result);
+                    }
+                    return eval_result;
+                } else {
+                    if (obj.message && obj.message != '') {
+                        Ext.Msg.show({
+                            title: 'Внимание',
+                            msg: obj.message,
+                            buttons: Ext.Msg.OK,
+                            icon: (obj.success != undefined && !obj.success ? Ext.Msg.WARNING : Ext.Msg.Info)
+                        });
+                        return;
+                    }
+                }
+            } else {
+                try {
+                    var eval_result = eval(text);
+                } catch (e) {
+                    Ext.Msg.show({
+                        title: 'Внимание'
+                        , msg: 'Произошла непредвиденная ошибка!'
+                        , buttons: Ext.Msg.OK
+                        , fn: Ext.emptyFn
+                        , animEl: 'elId'
+                        , icon: Ext.MessageBox.WARNING
+                    });
+                    throw e;
+                }
+                if (eval_result && eval_result instanceof Ext.Window && typeof AppDesktop != 'undefined' && AppDesktop) {
+                    AppDesktop.getDesktop().createWindow(eval_result);
+                }
+                return eval_result;
+            }
+        }
+
+    </script>
+    <title>Барс.QualityManager</title>
+</head>
+<body>
+<div class="wrapper">
+    <div class="header">
+        <div class="headerContent">
+            <div class="logo"><a href="">Quality<span
+                    class="pink">Manager</span><span class="gray"></span></a>
+            </div>
+            <ul class="nav">
+                <li><a href="#" class="active">Главная</a></li>
+                <li><a href="#">Управление</a></li>
+                <li><a href="#">Отчеты</a></li>
+                <li><a href="#">Статистика</a></li>
+                <li><a href="#">Триггеры</a></li>
+                <li><a href="#">Формулы</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="content">
+        <div class="leftCol">
+            <ul class="leftNav">
+                <li><a href="#">Распределение разработчиков</a></li>
+                <li><a href="#">Et veritatis quasi</a></li>
+                <li><a href="#">Vitae dicta sunt explicabo</a></li>
+                <li><a href="#">Nectun sed quia conseq</a></li>
+                <li><a href="#">Natus error sit voluptatem</a></li>
+                <li><a href="#">Vitae dicta sunt explicabo</a></li>
+                <li><a href="#">Et veritatis quasi</a></li>
+                <li><a href="#">Nectun sed quia conseq</a></li>
+                <li><a href="#">Natus error sit voluptatem</a></li>
+                <li><a href="#">Vitae dicta sunt explicabo</a></li>
+            </ul>
+        </div>
+        <div class="main">
+            <div class="hero">
+
+                <ul class="list">
+                    <li class="list__caption">Planned</li>
+                    <li class="list__caption">In dev</li>
+                    <li class="list__caption">QA</li>
+                    <li class="list__caption">Production</li>
+                    <li class="list__cell js-cell">
+                        <div class="list__card js-card" draggable="true">
+                            <div class="list__card-header">
+                                task title
+                            </div>
+                            <div class="list__card-info">
+                                Task description
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list__cell js-cell">
+
+                    </li>
+                    <li class="list__cell js-cell">
+
+                    </li>
+                    <li class="list__cell js-cell">
+
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <p>&copy; Footer content <a href="#">Link footer</a></p>
+    </div>
+</div>
+<script src="{% static "css3-mediaqueries.js" %}"></script>
+</body>
+</html>

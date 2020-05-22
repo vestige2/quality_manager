@@ -1,13 +1,28 @@
 --extra-index-url http://pypi.bars-open.ru/simple/
 --trusted-host pypi.bars-open.ru
 
+asn1crypto==0.24.0
+certifi==2019.6.16
+cffi==1.12.3
+chardet==3.0.4
+cryptography==2.7
+defusedxml==0.6.0
 Django==2.2.3
-pytz==2019.1
-six==1.12.0
-psycopg2==2.8.3 --no-binary psycopg2
-sqlparse==0.3.0
-
+idna==2.8
+jira==2.0.0
 m3-builder==1.2.0
 m3-core==3.1.3
 m3-django-compat==1.9.1
 m3-legacy==2.1.8
+oauthlib==3.1.0
+pbr==5.4.2
+psycopg2==2.8.3
+pycparser==2.19
+PyJWT==1.7.1
+pytz==2019.1
+requests==2.22.0
+requests-oauthlib==1.2.0
+requests-toolbelt==0.9.1
+six==1.12.0
+sqlparse==0.3.0
+urllib3==1.25.3

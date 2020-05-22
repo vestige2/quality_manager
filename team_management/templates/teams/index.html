@@ -1,0 +1,62 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width; initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static "style.css" %}">
+    <link rel="stylesheet" type="text/css"
+          href="{% static "media-queries.css" %}">
+    <link rel="stylesheet" type="text/css"
+          href="{% static "extjs/resources/css/ext-all.css" %}"/>
+    <script type="text/javascript"
+            src="{% static "extjs/adapter/ext/ext-base.js" %}"></script>
+    <script type="text/javascript"
+            src="{% static "extjs/ext-all.js" %}"></script>
+
+    <title>Барс.QualityManager</title>
+</head>
+<body>
+<div class="wrapper">
+    <div class="header">
+        <div class="headerContent">
+            <div class="logo"><a href="">Quality<span
+                    class="pink">Manager</span><span class="gray"></span></a>
+            </div>
+            <ul class="nav">
+                <li><a href="#" class="active">Главная</a></li>
+                <li><a href="#">Управление</a></li>
+                <li><a href="#">Отчеты</a></li>
+                <li><a href="#">Статистика</a></li>
+                <li><a href="#">Триггеры</a></li>
+                <li><a href="#">Формулы</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="content">
+        <p>{{ all }}</p>>
+        <input>
+        <script type="javascript">
+            $('#plus-total').click(function() {
+                    var data_total = $(this).attr('data-up-total');
+                    $.ajax({
+                        type: 'POST',
+                        url: '../ajax/countPlus.php',
+                        data: 'id='+data_total,
+                        dataType: 'html',
+                        cache: false,
+                        success: function(data) {
+                            $('#input-id'+data_total).val(data);
+                            loadcart();
+                        }
+                    });
+                });
+        </script>
+    </div>
+    <div class="footer">
+        <p>&copy; Footer content <a href="#">Link footer</a></p>
+    </div>
+</div>
+<script src="{% static "css3-mediaqueries.js" %}"></script>
+</body>
+</html>
